@@ -1,0 +1,35 @@
+﻿生成启动时间为 2022/3/18 星期五 9:03:53。
+     1>项目“C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\Testfreetype.vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>ClCompile:
+         D:\Program Files (x86)\VC\bin\CL.exe /c /I"C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\include" /I"C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\include\freetype2" /I"C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\include\freetype2\freetype" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _MBCS /Gm /EHsc /RTC1 /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt bmp_utils.c dmfont.c jpeg_utils.c
+         jpeg_utils.c
+     1>c:\program files (x86)\windows kits\8.1\include\shared\basetsd.h(72): warning C4142: 类型的良性重定义
+         dmfont.c
+         bmp_utils.c
+         正在生成代码...
+         D:\Program Files (x86)\VC\bin\CL.exe /c /I"C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\include" /I"C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\include\freetype2" /I"C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\include\freetype2\freetype" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _MBCS /Gm /EHsc /RTC1 /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt freetypedemo.cpp
+         freetypedemo.cpp
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(74): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(76): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(54): warning C4101: “copy_pPix”: 未引用的局部变量
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(179): warning C4101: “p”: 未引用的局部变量
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(179): warning C4101: “q”: 未引用的局部变量
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(262): warning C4101: “num_chars”: 未引用的局部变量
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(262): warning C4101: “n”: 未引用的局部变量
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(299): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(301): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(295): warning C4101: “MaxPoint”: 未引用的局部变量
+     1>c:\users\administrator\desktop\study code\testfreetype\testfreetype\freetypedemo.cpp(337): warning C4715: “FT_AddString”: 不是所有的控件路径都返回值
+       Link:
+         D:\Program Files (x86)\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Administrator\Desktop\study code\Testfreetype\Debug\Testfreetype.exe" /INCREMENTAL /NOLOGO freetype.lib libjpeg.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:libcmt.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Administrator\Desktop\study code\Testfreetype\Debug\Testfreetype.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Administrator\Desktop\study code\Testfreetype\Debug\Testfreetype.lib" /MACHINE:X86 Debug\bmp_utils.obj
+         Debug\dmfont.obj
+         Debug\freetypedemo.obj
+         Debug\jpeg_utils.obj
+            正在创建库 C:\Users\Administrator\Desktop\study code\Testfreetype\Debug\Testfreetype.lib 和对象 C:\Users\Administrator\Desktop\study code\Testfreetype\Debug\Testfreetype.exp
+     1>libcpmtd.lib(stdthrow.obj) : error LNK2019: 无法解析的外部符号 __CrtDbgReportW，该符号在函数 "void __cdecl std::_Debug_message(wchar_t const *,wchar_t const *,unsigned int)" (?_Debug_message@std@@YAXPB_W0I@Z) 中被引用
+     1>C:\Users\Administrator\Desktop\study code\Testfreetype\Debug\Testfreetype.exe : fatal error LNK1120: 1 个无法解析的外部命令
+     1>已完成生成项目“C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\Testfreetype.vcxproj”(Rebuild 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:01.18
