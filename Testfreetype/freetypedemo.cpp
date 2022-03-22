@@ -1,6 +1,7 @@
 /* 向JPEG图片中插入图片 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "freetypedemo.h"
 #include "bmp_utils.h"
 #include "jpeg_utils.h"
@@ -8,15 +9,18 @@
 #include <string.h>
 #include <math.h>
 #include <ft2build.h>
+#include <iostream>
 #include FT_FREETYPE_H
+#include FT_GLYPH_H
 #pragma comment(lib,"freetype.lib")
 #pragma comment(lib,"libjpeg.lib")
+#include <locale.h>
 /* Replace this function with something useful. */
 
 
 FT_Library    library;
 FT_Face       face;
-FT_GlyphSlot  slot;
+int Afontsize;
 typedef struct T_color
 {
 	char R;
@@ -37,12 +41,13 @@ int FT_INIT(char* filename, int fontsize, TEXTCOLOR* tcolor)
 	textcol.G = tcolor->G;
 	textcol.B = tcolor->B;
 	angle = (0.0 / 360) * 3.14159 * 2;      /* use 0 degrees  旋转     */
+	setlocale(LC_ALL, "chs");
 	error = FT_Init_FreeType(&library);              /* initialize library */
 	error = FT_New_Face(library, filename, 0, &face);/* create face object */
 	/* use 50pt at 100dpi */
-	error = FT_Set_Char_Size(face, fontsize* 64, 0,200, 0);                /* set character size */
+	Afontsize = fontsize;
+	error = FT_Set_Char_Size(face, fontsize* 64, 0,300, 0);                /* set character size */
 	/* error handling omitted */
-	slot = face->glyph;
 	/* set up matrix */
 	matrix.xx = (FT_Fixed)(cos(angle) * 0x10000L);
 	matrix.xy = (FT_Fixed)(-sin(angle) * 0x10000L);
@@ -53,39 +58,75 @@ int FT_INIT(char* filename, int fontsize, TEXTCOLOR* tcolor)
 	FT_Set_Transform(face, &matrix, &pen);
 	return  0;
 }
+//释放字库
+void FT_Deinit()
+{
+
+	if (face != NULL)
+	{
+		FT_Done_Face(face);
+		face = NULL;
+	}
+	if (library != NULL)
+	{
+		FT_Done_FreeType(library);
+		library = NULL;
+	}
+}
+
 
 //插入单个字符
-int FT_AddText(wchar_t  text, FT_Face face, FT_Bitmap*  bitmap, unsigned char* imgbuf, int* widthLen, int x, int y, int width, int height)
+int FT_AddText(wchar_t  text, FT_Face face, unsigned char* imgbuf, int* widthLen, int x, int y, int width, int height)
 {
 	FT_Error      error;
-	int i, j, MaxPoint;
-	error = FT_Load_Char(face, text, FT_LOAD_RENDER);
+	int i, j, MaxPoint, top;
+	int upperBound;
+	int lowerBound;
+	FT_Glyph glyph=NULL;
+	error = FT_Load_Char(face, text, FT_LOAD_DEFAULT);
+	error = FT_Get_Glyph(face->glyph, &glyph);
+	FT_Glyph_To_Bitmap(&glyph, ft_render_mode_normal, 0, 1);
+	FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph)glyph;
+	FT_Bitmap  *bitmap = &bitmap_glyph->bitmap;
 	*widthLen = bitmap->width;
 	if (error)
 		return -1;
-	for (i = 0; i <bitmap->rows; i++)
+	if ((bitmap->rows < 1) || (bitmap->width < 1))
 	{
-		for (j = 0; j < bitmap->width; j++)
+		return -1;
+	}
+	//top = bitmap->rows - bitmap_glyph->top;
+	for (i = 0; i< bitmap->rows; i++)
+	{
+		for (j = 0; j<bitmap->width; j++)
 		{
+
 			if (bitmap->buffer[i*bitmap->width + j])
-			{   
-				if ((((i + y)*width + j + x) * 3 + 2)>width*height * 3)
+			{
+				upperBound = ((Afontsize + y - bitmap->rows + i)*width + j + x) * 3;
+				lowerBound = Afontsize + y - bitmap->rows + i;
+				if ((upperBound>width*height * 3) || (lowerBound<0))
 				{
 					continue;
 				}
-				imgbuf[((i + y)*width + j + x) * 3] = textcol.R;
-				imgbuf[((i + y)*width + j + x) * 3 + 1] = textcol.G;
-				imgbuf[((i + y)*width + j + x) * 3 + 2] = textcol.B;
+				if (lowerBound< 0)
+				{
+					continue;
+				}
+				imgbuf[upperBound] = textcol.R;
+				imgbuf[upperBound + 1] = textcol.G;
+				imgbuf[upperBound + 2] = textcol.B;
 			}
-
 		}
 	}
+	FT_Done_Glyph(glyph);
+	glyph = NULL;
 	return 0;
 }
 
 
 //插入一行字符
-int FT_AddString(wchar_t*  text, FT_Face face, FT_Bitmap*  bitmap, unsigned char* imgbuf, int x, int y, int width, int height)
+int FT_AddString(wchar_t*  text, FT_Face face, unsigned char* imgbuf, int x, int y, int width, int height)
 {
 	int i, wlen, allwidth, textwidth;
 	if (text == NULL)
@@ -96,12 +137,12 @@ int FT_AddString(wchar_t*  text, FT_Face face, FT_Bitmap*  bitmap, unsigned char
 	allwidth = 0;
 	for (i = 0; i < wlen; i++)
 	{
-		FT_AddText(text[i], face, bitmap, imgbuf, &textwidth, x + allwidth, y, width, height);
+		FT_AddText(text[i], face, imgbuf, &textwidth, x + allwidth, y, width, height);
 		allwidth += textwidth + textwidth / 6;
 	}
 }
 
-int ImgWriteText(const char* in_jpg_file, const char* out_jpg_file,wchar_t* insertString)
+int ImgWriteText(const char* in_jpg_file, const char* out_jpg_file, char* insertString, int x, int y)
 {
 	unsigned char* buffer = NULL;
 	int size;
@@ -130,23 +171,49 @@ int ImgWriteText(const char* in_jpg_file, const char* out_jpg_file,wchar_t* inse
 	{
 		return -1;
 	}
-	FT_AddString(insertString, face, &slot->bitmap, buffer, 10, 20, width, height);
-	write_jpg_file(out_jpg_file,buffer, width, height, 50);
+	/******************************/
+	char *val1, *val2, *buf;
+	char seps[2] = "\r";
+	char *pc = new char[strlen(insertString) + 1];
+	strcpy_s(pc, strlen(insertString) + 1, insertString);
+	val1 = strtok_s(pc, seps, &buf);
+
+	wchar_t  wc[100];
+	size_t cSize;
+	int ii = 0;
+	while (1)
+	{
+		cSize = strlen(val1) + 1;
+		size_t wlen = 0;
+		mbstowcs_s(&wlen,wc, cSize,val1,_TRUNCATE);
+		
+		FT_AddString(wc, face, buffer, x, y + (Afontsize * 3)*ii, width, height);
+		val1 = strtok_s(NULL, seps, &buf);
+		if (val1 == NULL)
+		{
+			break;
+		}
+		ii++;
+	}
+	delete[]pc;
+	/************************************/
+	write_jpg_file(out_jpg_file, buffer, width, height, 50);
 	free(buffer);
 	if (jpg_buffer != NULL)
 	{
-	free(jpg_buffer);
+		free(jpg_buffer);
 	}
 	return 0;
 }
 int main()
 {
-	wchar_t*  text = L"这是FREETYPE_DEMO";
+	char*  text = "这是FREETYPE_DEMO";
 	TEXTCOLOR color;
 	color.R = 0;
 	color.G = 255;
 	color.B = 0;
-	FT_INIT("simhei.ttf",20, &color);
-	ImgWriteText("1.jpg", "2.jpg", text);
+	FT_INIT("simhei.ttf",10, &color);
+	ImgWriteText("1.jpg", "2.jpg", text,50,50);
+	FT_Deinit();
 }
 

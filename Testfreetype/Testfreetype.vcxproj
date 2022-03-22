@@ -73,7 +73,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\include\freetype2\freetype;C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\include\freetype2;C:\Users\Administrator\Desktop\study code\Testfreetype\Testfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2\freetype;C:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2;C:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
