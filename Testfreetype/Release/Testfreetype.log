@@ -1,11 +1,11 @@
-﻿生成启动时间为 2022/3/22 星期二 11:24:27。
+﻿生成启动时间为 2022/4/7 星期四 11:41:27。
      1>项目“C:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\Testfreetype.vcxproj”在节点 2 上(Rebuild 个目标)。
      1>ClCompile:
-         D:\Program Files (x86)\VC\bin\CL.exe /c /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2\freetype /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2 /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt bmp_utils.c jpeg_utils.c
+         D:\Program Files (x86)\VC\bin\CL.exe /c /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2\freetype /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2 /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt bmp_utils.c jpeg_utils.c
          bmp_utils.c
          jpeg_utils.c
      1>C:\Program Files (x86)\Windows Kits\8.1\Include\shared\basetsd.h(72): warning C4142: 类型的良性重定义
-         D:\Program Files (x86)\VC\bin\CL.exe /c /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2\freetype /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2 /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt freetypedemo.cpp
+         D:\Program Files (x86)\VC\bin\CL.exe /c /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2\freetype /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include\freetype2 /IC:\Users\Administrator\Desktop\studycode\GITCODE\Testfreetype\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt freetypedemo.cpp
          freetypedemo.cpp
      1>freetypedemo.cpp(39): warning C4101: “num_chars”: 未引用的局部变量
      1>freetypedemo.cpp(39): warning C4101: “n”: 未引用的局部变量
@@ -14,7 +14,8 @@
      1>freetypedemo.cpp(82): warning C4101: “MaxPoint”: 未引用的局部变量
      1>freetypedemo.cpp(82): warning C4101: “top”: 未引用的局部变量
      1>freetypedemo.cpp(175): warning C4101: “val2”: 未引用的局部变量
-     1>freetypedemo.cpp(213): warning C4309: “=”: 截断常量值
+     1>freetypedemo.cpp(227): warning C4101: “val2”: 未引用的局部变量
+     1>freetypedemo.cpp(285): warning C4309: “=”: 截断常量值
        Link:
          D:\Program Files (x86)\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Administrator\Desktop\studycode\GITCODE\Release\Testfreetype.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:libcmt.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Administrator\Desktop\studycode\GITCODE\Release\Testfreetype.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Administrator\Desktop\studycode\GITCODE\Release\Testfreetype.lib" /MACHINE:X86 /SAFESEH Release\bmp_utils.obj
          Release\freetypedemo.obj
@@ -28,4 +29,4 @@
 
 生成成功。
 
-已用时间 00:00:01.17
+已用时间 00:00:01.21

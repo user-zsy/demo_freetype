@@ -17,7 +17,7 @@
 #include <locale.h>
 /* Replace this function with something useful. */
 
-
+//_CRT_SECURE_NO_WARNINGS     unsafe提示时可以在预处理器中加入这些
 FT_Library    library;
 FT_Face       face;
 int Afontsize;
@@ -173,7 +173,7 @@ int ImgWriteText(const char* in_jpg_file, const char* out_jpg_file, char* insert
 	}
 	/******************************/
 	char *val1, *val2, *buf;
-	char seps[2] = "\r";
+	char seps[2] = "\n";
 	char *pc = new char[strlen(insertString) + 1];
 	strcpy_s(pc, strlen(insertString) + 1, insertString);
 	val1 = strtok_s(pc, seps, &buf);
@@ -184,10 +184,18 @@ int ImgWriteText(const char* in_jpg_file, const char* out_jpg_file, char* insert
 	while (1)
 	{
 		cSize = strlen(val1) + 1;
+		if (cSize - 2 >= 0)
+		{
+			if (val1[cSize - 2] == '\r')
+			{
+				val1[cSize - 2] =0;
+				//cSize = cSize - 2;
+			}
+		}
 		size_t wlen = 0;
 		mbstowcs_s(&wlen,wc, cSize,val1,_TRUNCATE);
 		
-		FT_AddString(wc, face, buffer, x, y + (Afontsize * 3)*ii, width, height);
+		FT_AddString(wc, face, buffer, x, y + (Afontsize * 4)*ii, width, height);
 		val1 = strtok_s(NULL, seps, &buf);
 		if (val1 == NULL)
 		{
@@ -205,15 +213,82 @@ int ImgWriteText(const char* in_jpg_file, const char* out_jpg_file, char* insert
 	}
 	return 0;
 }
+
+int jpegStringAddText(const unsigned char* inputJpgString,int inputJpgSize, const char* outjpgfile, char* insertString, int x, int y)
+{
+	unsigned char* buffer = NULL;
+	int width, height,size;
+	read_jpg_buffer((unsigned char*)inputJpgString,inputJpgSize, &buffer, &size, &width, &height);
+	if (buffer == NULL)
+	{
+		return -1;
+	}
+	/******************************/
+	char *val1, *val2, *buf;
+	char seps[2] = "\n";
+	char *pc = new char[strlen(insertString) + 1];
+	strcpy_s(pc, strlen(insertString) + 1, insertString);
+	val1 = strtok_s(pc, seps, &buf);
+
+	wchar_t  wc[100];
+	size_t cSize;
+	int ii = 0;
+	while (1)
+	{
+		cSize = strlen(val1) + 1;
+		if (cSize - 2 >= 0)
+		{
+			if (val1[cSize - 2] == '\r')
+			{
+				val1[cSize - 2] =0;
+				//cSize = cSize - 2;
+			}
+		}
+		size_t wlen = 0;
+		mbstowcs_s(&wlen,wc, cSize,val1,_TRUNCATE);
+		
+		FT_AddString(wc, face, buffer, x, y + (Afontsize * 4)*ii, width, height);
+		val1 = strtok_s(NULL, seps, &buf);
+		if (val1 == NULL)
+		{
+			break;
+		}
+		ii++;
+	}
+	delete[]pc;
+	write_jpg_file(outjpgfile, buffer, width, height, 50);
+	/************************************/
+	free(buffer);
+	return 0;
+}
+
+
+
+
 int main()
 {
-	char*  text = "这是FREETYPE_DEMO";
+	char*  text = "这是FREETYPE_DEMO\r\n123\r\n789\r\n";
+	FILE* fp;
+	fp = fopen("1.jpg", "r");
+	if (!fp)
+	{
+		return -1;
+	}
+	fseek(fp, 0, SEEK_END);
+	int jpgSize = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+	char* jpgbuf = (char*)malloc(jpgSize);
+	fread(jpgbuf,jpgSize,1,fp);
+	fclose(fp);
+	
 	TEXTCOLOR color;
-	color.R = 0;
-	color.G = 255;
+	color.R = 255;
+	color.G = 0;
 	color.B = 0;
 	FT_INIT("simhei.ttf",10, &color);
 	ImgWriteText("1.jpg", "2.jpg", text,50,50);
+	jpegStringAddText((const unsigned char*)jpgbuf, jpgSize, "3.jpg", text, 50, 200);
+	free(jpgbuf);
 	FT_Deinit();
 }
 
